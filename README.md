@@ -1,43 +1,39 @@
-# CS2 Player Detection
+# Распознавание игроков Counter-Strike 2
 
-An offline computer vision demo that annotates local Counter-Strike 2 screenshots and recordings with object detections.
+Демонстрационная консольная утилита размечает локальные скриншоты и записи Counter-Strike 2 с помощью YOLO.
 
-## Features
+## Возможности
 
-- Accepts common local image and video formats.
-- Saves bounding boxes, class labels, and confidence scores.
-- Supports a configurable confidence threshold, device, and output directory.
+- Принимает локальные изображения и видео в распространённых форматах.
+- Рисует рамки объектов и сохраняет метки классов и оценки уверенности.
+- Позволяет указать порог уверенности, устройство и выходную папку.
 
-## Stack and architecture
+## Устройство
 
-`main.py` validates the local files, loads an object detection checkpoint with Ultralytics YOLO, and runs streamed inference. OpenCV writes annotated images as JPEGs. Ultralytics handles annotated video output. Each run gets a separate directory.
+`main.py` проверяет входные файлы и выполняет потоковый инференс Ultralytics YOLO. OpenCV сохраняет изображения в JPEG. Видео обрабатывается средствами Ultralytics. Для каждого запуска создаётся отдельная папка результатов.
 
-## Setup
+## Установка
 
-The available Windows environment uses Python 3.13, PyTorch 2.8.0, Ultralytics 8.3.204, and OpenCV 4.12.0.88.
+Доступное окружение Windows использовало Python 3.13, PyTorch 2.8.0, Ultralytics 8.3.204 и OpenCV 4.12.0.88.
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
-Place a trusted detection checkpoint at `weights/best.pt` or pass an explicit checkpoint path. GPU inference requires a compatible PyTorch build and device.
+Укажите путь к доверенному файлу весов модели обнаружения объектов или положите его в `weights/best.pt`. Для запуска на GPU нужны совместимые устройство и сборка PyTorch.
 
-## Usage
+## Запуск
 
 ```powershell
 .\.venv\Scripts\python.exe main.py inputs/screenshot.png --device cpu
 .\.venv\Scripts\python.exe main.py inputs/match.mp4 --weights weights/best.pt --conf 0.35
 ```
 
-Results go to a unique directory under `outputs/`. Video output is re-encoded without audio.
+Результаты сохраняются в отдельном каталоге под `outputs/`. Видео перекодируется без звуковой дорожки.
 
-## Status and provenance
+## Статус и происхождение
 
-This is an experimental inference demo. Detection quality needs evaluation on labeled footage. The local checkpoint is excluded from Git, and its redistribution terms and the training-data provenance require verification. Code redistribution should retain the upstream attribution and GPL-3.0 license.
+Это эксперимент по запуску готовой модели на записях. Качество обнаружения нужно отдельно измерять на размеченных кадрах. Для распространения весов требуется проверить условия их использования и происхождение обучающих данных. Публичная копия содержит исходники и атрибуцию.
 
-Based on the upstream project by TheLlamainator. [CS2-AI-Bot](https://github.com/TheLlamainator/CS2-AI-Bot) · [GPL-3.0](LICENSE)
-
-## Кратко для портфолио
-
-Экспериментальный CLI для разметки заранее записанных изображений и видео через YOLO. Адаптация офлайн-режима опирается на стороннюю разработку. Авторство модели и права на веса требуют подтверждения.
+Разработка основана на проекте TheLlamainator. [Исходный CS2-AI-Bot](https://github.com/TheLlamainator/CS2-AI-Bot) · [Лицензия GPL-3.0](LICENSE)
